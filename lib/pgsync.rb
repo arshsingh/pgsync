@@ -317,7 +317,7 @@ Options:}
         o.boolean "--truncate", "truncate existing rows", default: false
         o.boolean "--schema-only", "schema only", default: false
         o.boolean "--no-constraints", "exclude constraints/triggers when syncing schema", default: false
-        o.boolean "--add_constraints", "add constraints and triggers after syncing data", default: false
+        o.boolean "--add-constraints", "add constraints and triggers after syncing data", default: false
         o.boolean "--no-rules", "do not apply data rules", default: false
         o.boolean "--setup", "setup", default: false
         o.boolean "--in-batches", "in batches", default: false, help: false
