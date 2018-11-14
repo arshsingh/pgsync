@@ -129,7 +129,7 @@ module PgSync
             log_completed(start_time)
           end
 
-          if opts[:add-constraints]
+          if opts["add-constraints"]
             log "* Adding constraints/triggers"
             dump_command = "pg_dump -Fc --verbose --section=post-data --no-owner --no-acl #{to_url(source_uri)}"
             restore_command = "pg_restore --verbose --no-owner --no-acl --clean #{if_exists ? "--if-exists" : nil} -d #{to_url(destination_uri)}"
