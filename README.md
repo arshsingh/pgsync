@@ -8,6 +8,9 @@ Sync Postgres data to your local machine. Designed for:
 
 :tangerine: Battle-tested at [Instacart](https://www.instacart.com/opensource)
 
+## Docker usage
+See the [docker/README.md](./docker/README.md) file.
+
 ## Installation
 
 pgsync is a command line tool. To install, run:

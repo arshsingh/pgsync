@@ -1,0 +1,48 @@
+version: '3'
+services:
+  db1:
+    image: postgres:9.5
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: ${SRC_DB}
+      POSTGRES_USER: ${SRC_USER}
+      POSTGRES_PASSWORD: ${SRC_PASS}
+    volumes:
+      - "./add-data.sql:/docker-entrypoint-initdb.d/add-data.sql"
+  db2:
+    image: postgres:10
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: ${DEST_DB}
+      POSTGRES_USER: ${DEST_USER}
+      POSTGRES_PASSWORD: ${DEST_PASS}
+  db-sync:
+    build: ../..
+    links:
+      - db1:db1
+      - db2:db2
+    environment:
+      FROM_USER: ${SRC_USER}
+      FROM_PASS: ${SRC_PASS}
+      FROM_HOST: db1
+      FROM_PORT: 5432
+      FROM_DB: ${SRC_DB}
+      TO_USER: ${DEST_USER}
+      TO_PASS: ${DEST_PASS}
+      TO_HOST: db2
+      TO_PORT: 5432
+      TO_DB: ${DEST_DB}
+    # note: don't override the entrypoint when using this container, this is just for a demo to run SQL after the sync
+    entrypoint: |
+      /bin/sh -c "
+        echo 'waiting for DBs' && \
+        sleep 10 && \
+        SCHEMA_ONLY=1 /bin/sh /app/run.sh && \
+        /bin/sh /app/run.sh && \
+        sleep 1 && \
+        PGPASSWORD=pass psql -h db2 -U user -d db2 -c 'select * from blah;'"
+    depends_on:
+      - db1
+      - db2
