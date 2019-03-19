@@ -11,6 +11,7 @@ RUN \
   gem build pgsync.gemspec && \
   gem install pgsync-*.gem && \
   apk del .build-deps && \
+  chmod +x docker/*.sh && \
   mv docker/*.sh ../ && \
   cd .. && \
   rm -r src/

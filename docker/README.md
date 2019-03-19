@@ -47,12 +47,12 @@ services:
 
 The periodic command that is run by `cron` will **only sync data**. This command will fail if the schema doesn't already exist. To fix this, after you've deployed the stack, you should do this manual, one-off step to create the schema:
 ```bash
-docker exec -i example_db-sync_1 sh -c 'SCHEMA_ONLY=1 sh /run.sh'
+docker exec -i example_db-sync_1 sh -c 'SCHEMA_ONLY=1 sh /app/run.sh'
 ```
 
 If you're impatient and don't want to wait for the first data sync to get some data, you can trigger that using a manual step too:
 ```bash
-docker exec -i example_db-sync_1 sh -c 'sh /run.sh'
+docker exec -i example_db-sync_1 sh -c 'sh /app/run.sh'
 ```
 
 ## Run example docker-compose stack

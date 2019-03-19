@@ -18,6 +18,7 @@ if [ ! -z "$SCHEMA_ONLY" ]; then
   EXTRA_OPTS="--schema-only --no-constraints"
 fi
 
+echo "Run started at $(date)"
 pgsync \
   $EXTRA_OPTS \
   --from "postgres://$FROM_USER:$FROM_PASS@$FROM_HOST:$FROM_PORT/$FROM_DB" \
