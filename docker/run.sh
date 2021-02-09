@@ -23,5 +23,11 @@ pgsync \
   $EXTRA_OPTS \
   --from "postgres://$FROM_USER:$FROM_PASS@$FROM_HOST:$FROM_PORT/$FROM_DB" \
   --to "postgres://$TO_USER:$TO_PASS@$TO_HOST:$TO_PORT/$TO_DB" \
-  --to-safe
-
+  --to-safe || {
+  if [ -z "${SENTRY_DSN:-}" ]; then
+    echo "[WARN] No SENTRY_DSN, cannot send error report"
+  else
+    echo "Reporting error to Sentry.io"
+    sentry-cli send-event -m 'Failed to sync DB'
+  fi
+}

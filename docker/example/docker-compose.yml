@@ -37,6 +37,9 @@ services:
       TO_HOST: db2
       TO_PORT: 5432
       TO_DB: ${DEST_DB}
+      # uncomment and add your DSN to enable Sentry.io reporting. A simple way
+      # to trigger an error is to change TO_HOST: db99 (invalid hostname).
+      # SENTRY_DSN: 'https://11111111111111111111111111111111@o222222.ingest.sentry.io/3333333'
     # note: don't override the entrypoint when using this container, this is just for a demo to run SQL after the sync
     entrypoint: |
       /bin/sh -c "
